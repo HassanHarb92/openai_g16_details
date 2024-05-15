@@ -1,18 +1,48 @@
 from openai import OpenAI
+import sys
+import json
+
+# Instantiate the OpenAI client
+client = OpenAI()
+
+def extract_gaussian_commands(filepath):
+    """Extract Gaussian command line from the log file."""
+    start = False
+    command_line = ""
+    with open(filepath, "r") as file:
+        for line in file:
+            if line.strip() == "----------------------------------------------------------------------":
+                if start:
+                    break
+                start = True
+            elif start:
+                command_line += line.strip()
+    return command_line
+
+
+filepath = sys.argv[1]
+
+command_line = extract_gaussian_commands(filepath)
+print("Command line:", command_line)
+
+# Open a file named 'cmd.txt' in write mode
+with open('logs/cmd.txt', 'w') as file:
+    # Write the contents of command_line to the file
+    file.write(command_line)
  
 client = OpenAI()
  
 assistant = client.beta.assistants.create(
   name="Gaussian Assistant",
-  instructions="You are an expert computational chemist. Use your knowledge base to explain the keywords in a gaussian file.",
+  instructions="You are an expert computational chemist who has been working with Gaussian software for a very long time. Use your knowledge base to explain the keywords in a gaussian file.",
   model="gpt-4o",
   tools=[{"type": "file_search"}],
 )
 
 
 # Create a vector store caled "Financial Statements"
-vector_store = client.beta.vector_stores.create(name="LOHC Data")
- 
+vector_store = client.beta.vector_stores.create(name="Gaussian output data")
+
 # Ready the files for upload to OpenAI
 #file_paths = ["pdfs/1.pdf","pdfs/2.pdf","pdfs/3.pdf"]
 file_paths = ['logs/cmd.txt']
@@ -43,8 +73,9 @@ thread = client.beta.threads.create(
   messages=[
     {
       "role": "user",
-#      "content": "What do the command lines in the log file tell us?",
-      "content": "From the provided command line, write a methods section for a scientific paper",
+      "content": "What do the command lines in the log file tell us?",
+#      "content": "From the route line of the Gaussian output file provided, explain each keyword",
+#      "content": "From the provided command line, write a methods section for a scientific paper",
       # Attach the new file to the message.
       "attachments": [
         { "file_id": message_file.id, "tools": [{"type": "file_search"}] }

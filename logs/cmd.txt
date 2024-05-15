@@ -1,1 +1,1 @@
-#p B3LYP 6-31+G(2df,p) empiricaldispersion=gd3 opt=(cartesian,calcall,maxcycles=500) freq scf=(maxcycles=500,xqc,maxconventional=50)
+#p M05 6-31+G(2df,p) empiricaldispersion=gd3 opt=(cartesian,calcall,maxcycles=500) freq scf=(maxcycles=500,xqc,maxconventional=50)
