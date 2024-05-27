@@ -38,13 +38,18 @@ assistant = client.beta.assistants.update(
 message_file = client.files.create(
   file=open("fe_pdfs/1.pdf", "rb"), purpose="assistants"
 )
+
+content = input("Write your prompt here:")
+
  
 # Create a thread and attach the file to the message
 thread = client.beta.threads.create(
   messages=[
     {
       "role": "user",
-      "content": "Write a well structured paragraph on the importance of studying the redox potential of Fe ions, give examples. Provide the paragraph in a well structured scientific format.",
+#      "content": "Write a well structured paragraph on the importance of studying the redox potential of Fe ions, give examples. Provide the paragraph in a well structured scientific format.",
+#      "content": "Give me a full survey of the ions that can increase redox potential of iron(II). Give them in a well structured output",
+      "content": content,
       # Attach the new file to the message.
       "attachments": [
         { "file_id": message_file.id, "tools": [{"type": "file_search"}] }
