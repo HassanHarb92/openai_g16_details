@@ -39,7 +39,7 @@ message_file = client.files.create(
   file=open("fe_pdfs/1.pdf", "rb"), purpose="assistants"
 )
 
-content = input("Write your prompt here:")
+content = input("Write your prompt here:\n")
 
  
 # Create a thread and attach the file to the message
