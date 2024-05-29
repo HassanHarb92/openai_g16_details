@@ -3,4 +3,5 @@ Provides explanation on keywords found in a Gaussian .log file.
 
 Usage: python cmd_openai_gaussian.py logs/<log_file>
 
+Based on OpenAI assistant tutorial: https://platform.openai.com/docs/assistants/tools/file-search 
 
