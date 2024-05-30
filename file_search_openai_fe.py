@@ -5,7 +5,7 @@ client = OpenAI()
 assistant = client.beta.assistants.create(
   name="LOHC Assistant",
 #  instructions="You are an expert chemist. Use your knowledge base to answer questions on liquid organic hydrogen carriers.",
-  instructions="You are an expert electrochemist. You provide well constructed scientific paragraphs on a given topic. Your expertise is in iron redox chemistry",
+  instructions="You are an expert electrochemist. You provide well constructed scientific paragraphs on a given topic. Your expertise is in iron redox chemistry", # improve this instruction, add more details on chemistry
   model="gpt-4o",
   tools=[{"type": "file_search"}],
 )
@@ -16,7 +16,7 @@ vector_store = client.beta.vector_stores.create(name="LOHC Data")
  
 # Ready the files for upload to OpenAI
 #file_paths = ["pdfs/1.pdf","pdfs/2.pdf","pdfs/3.pdf"]
-file_paths = ["fe_pdfs/1.pdf","fe_pdfs/2.pdf","fe_pdfs/3.pdf","fe_pdfs/4.pdf","fe_pdfs/5.pdf"]
+file_paths = ["fe_pdfs/1.pdf","fe_pdfs/2.pdf","fe_pdfs/3.pdf","fe_pdfs/4.pdf","fe_pdfs/5.pdf"] # generalize this, provide a directory and have the code read all .pdf files
 file_streams = [open(path, "rb") for path in file_paths]
  
 # Use the upload and poll SDK helper to upload the files, add them to the vector store,
@@ -39,8 +39,7 @@ message_file = client.files.create(
   file=open("fe_pdfs/1.pdf", "rb"), purpose="assistants"
 )
 
-content = input("Write your prompt here:\n")
-
+content = input("Write your prompt here:\n") # user enters prompts when we run the code, here is where we will experiment with different prompts
  
 # Create a thread and attach the file to the message
 thread = client.beta.threads.create(
